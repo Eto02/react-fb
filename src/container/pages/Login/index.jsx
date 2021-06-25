@@ -1,28 +1,46 @@
 import React,{Component} from 'react';
 import { connect } from 'react-redux';
-import { actionUserName } from '../../../config/redux/action';
-
+import { loginUserAPI } from '../../../config/redux/action';
+import Button from '../../../components/atoms/Button';
 class Login extends Component{
-    changUser =()=>{
-        this.props.changeUserName()
+    state={
+        email:'',
+        password:'',
     }
     
+    handleChangeText =(e)=>{
+        this.setState({
+            [e.target.id]:e.target.value,
+        })
+    }
+
+    handleLoginSubmit =()=>{
+        const {email,password} =this.state;
+        console.log('data',email,password)
+        this.props.loginAPI({email,password})
+        this.setState({
+            email:'',password:''
+        })
+    }
+
     render(){
         return(
-           <div>
-                <div>Login Page {this.props.userName}</div>
-                <button onClick={this.changUser}>Change User Name</button>
-                <button>Go to Dashboard</button>
-           </div>
-        )
+            <div className='auth-container'>
+                <div className='auth-card'>
+                         <p className='auth-title'>Login Page</p>
+                         <input className='input' onChange={this.handleChangeText} value={this.state.email}id='email' type="text" placeholder='Email'/>
+                         <input className='input' onChange={this.handleChangeText} value={this.state.password}id='password'type="password" placeholder='Password'/>
+                         <Button onClick={this.handleLoginSubmit} title='Login' loading={this.props.isLoading} />
+                </div>
+            </div>
+         )
     }
 }
 
-const reduxState=(state)=>({
-    popup:state.popup,
-    userName:state.user
+const reduxState =(state)=>({
+    isLoading:state.isLoading
 })
-const reduxDispatch=(dispatch)=>({
-    changeUserName:()=>dispatch(actionUserName()),
+const reduxDispatch =(dispatch)=>({
+    loginAPI:(data)=>dispatch(loginUserAPI(data))
 })
 export default connect(reduxState,reduxDispatch)(Login);

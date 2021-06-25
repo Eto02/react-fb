@@ -21,3 +21,24 @@ export const registerUserAPI =(data)=>(dispatch)=>{
     )
 
 }
+
+export const loginUserAPI =(data)=>(dispatch)=>{
+    dispatch({type:'CHANGE_LOADING',value:true})
+    return(
+        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+        .then((res) => {
+        console.log(res)
+        dispatch({type:'CHANGE_LOADING',value:false})
+        dispatch({type:'CHANGE_ISLOADING',value:true})
+        dispatch({type:'CHANEG_USER',value:true})
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode,errorMessage)
+          dispatch({type:'CHANGE_LOADING',value:false})
+        dispatch({type:'CHANGE_ISLOADING',value:false})
+        })
+    )
+
+}

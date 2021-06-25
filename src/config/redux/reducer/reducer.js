@@ -4,7 +4,7 @@ const initialState={
     popup:false,
     isLogin:false,
     isLoading:false,
-    user:'Latihan'
+    user:{}
 }
 
 const reducer=(state=initialState,action)=>{

@@ -10,29 +10,31 @@ class Register extends Component{
         email:'',
         password:'',
     }
+    
     handleChangeText =(e)=>{
-        // console.log(e.target.value)
         this.setState({
             [e.target.id]:e.target.value,
         })
     }
+
     handleRegisterSubmit =()=>{
         const {email,password} =this.state;
         console.log('data',email,password)
         this.props.regitserAPI({email,password})
-        
-        
+        this.setState({
+            email:'',password:''
+        })
     }
+
     render(){
         return(
            <div className='auth-container'>
                <div className='auth-card'>
                         <p className='auth-title'>Register Page</p>
-                        <input className='input' onChange={this.handleChangeText} id='email' type="text" placeholder='Email'/>
-                        <input className='input' onChange={this.handleChangeText} id='password'type="password" placeholder='Password'/>
+                        <input className='input' onChange={this.handleChangeText} value={this.state.email}id='email' type="text" placeholder='Email'/>
+                        <input className='input' onChange={this.handleChangeText} value={this.state.password}id='password'type="password" placeholder='Password'/>
                         <Button onClick={this.handleRegisterSubmit} title='Register' loading={this.props.isLoading} />
                </div>
-                {/* <button>Go to Dashboard</button> */}
            </div>
         )
     }
