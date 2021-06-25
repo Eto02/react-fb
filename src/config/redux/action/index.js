@@ -5,40 +5,48 @@ export const actionUserName =()=>(dispatch)=>{
         },2000)
 }
 export const registerUserAPI =(data)=>(dispatch)=>{
-    dispatch({type:'CHANGE_LOADING',value:true})
-    return(
-        firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
-        .then((res) => {
-        console.log(res)
-        dispatch({type:'CHANGE_LOADING',value:false})
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorCode,errorMessage)
-          dispatch({type:'CHANGE_LOADING',value:false})
-        })
-    )
+    return new Promise((resolve,reject)=>{
+        dispatch({type:'CHANGE_LOADING',value:true})
+        return(
+            firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+            .then((res) => {
+            console.log(res)
+            dispatch({type:'CHANGE_LOADING',value:false})
+            resolve(true)
+            })
+            .catch((error) => {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              console.log(errorCode,errorMessage)
+              dispatch({type:'CHANGE_LOADING',value:false})
+              reject(false)
+            })
+        )
+    })
 
 }
 
 export const loginUserAPI =(data)=>(dispatch)=>{
-    dispatch({type:'CHANGE_LOADING',value:true})
-    return(
-        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-        .then((res) => {
-        console.log(res)
-        dispatch({type:'CHANGE_LOADING',value:false})
-        dispatch({type:'CHANGE_ISLOADING',value:true})
-        dispatch({type:'CHANEG_USER',value:true})
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorCode,errorMessage)
-          dispatch({type:'CHANGE_LOADING',value:false})
-        dispatch({type:'CHANGE_ISLOADING',value:false})
-        })
-    )
+    return new Promise((resolve,reject)=>{
+        dispatch({type:'CHANGE_LOADING',value:true})
+        return(
+            firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+            .then((res) => {
+            console.log(res)
+            dispatch({type:'CHANGE_LOADING',value:false})
+            dispatch({type:'CHANGE_ISLOADING',value:true})
+            dispatch({type:'CHANEG_USER',value:res.user})
+            resolve(true)
+            })
+            .catch((error) => {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              console.log(errorCode,errorMessage)
+              dispatch({type:'CHANGE_LOADING',value:false})
+            dispatch({type:'CHANGE_ISLOADING',value:false})
+            reject(false)
+            })
+        )
+    })
 
 }

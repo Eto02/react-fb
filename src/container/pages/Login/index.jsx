@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import { connect } from 'react-redux';
 import { loginUserAPI } from '../../../config/redux/action';
 import Button from '../../../components/atoms/Button';
+import { withRouter } from 'react-router-dom';
 class Login extends Component{
     state={
         email:'',
@@ -14,13 +15,21 @@ class Login extends Component{
         })
     }
 
-    handleLoginSubmit =()=>{
+    handleLoginSubmit = async ()=>{
         const {email,password} =this.state;
-        console.log('data',email,password)
-        this.props.loginAPI({email,password})
-        this.setState({
-            email:'',password:''
-        })
+        const {history}=this.props;
+        const res =await this.props.loginAPI({email,password})
+        .catch(err=>err);
+        if (res) {
+            console.log('Login success')
+            this.setState({
+                email:'',password:''
+            })
+            history.push('/')
+        }else{
+            console.log('Logic Fail')
+        }
+        console.log(this.props)
     }
 
     render(){
@@ -38,9 +47,10 @@ class Login extends Component{
 }
 
 const reduxState =(state)=>({
-    isLoading:state.isLoading
+    isLoading:state.isLoading,
+    user:state.user
 })
 const reduxDispatch =(dispatch)=>({
-    loginAPI:(data)=>dispatch(loginUserAPI(data))
+    loginAPI:(data)=>dispatch(loginUserAPI(data)),
 })
-export default connect(reduxState,reduxDispatch)(Login);
+export default connect(reduxState,reduxDispatch)(withRouter(Login));

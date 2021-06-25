@@ -17,13 +17,20 @@ class Register extends Component{
         })
     }
 
-    handleRegisterSubmit =()=>{
+    handleRegisterSubmit = async()=>{
         const {email,password} =this.state;
         console.log('data',email,password)
-        this.props.regitserAPI({email,password})
-        this.setState({
-            email:'',password:''
-        })
+        const res =await  this.props.regitserAPI({email,password})
+        .catch(err=>err)
+        if (res) {
+            this.setState({
+                email:'',password:''
+            })
+            console.log('Register Success')
+        }else{
+            console.log('Register Failed')
+        }
+       
     }
 
     render(){
