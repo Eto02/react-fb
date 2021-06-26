@@ -7,6 +7,6 @@ import firebase from './config/firebase/index';
 
 
 
-console.log('friebase=>',firebase)
+// console.log('friebase=>',firebase)
 ReactDOM.render(<App />,document.getElementById('root'));
 

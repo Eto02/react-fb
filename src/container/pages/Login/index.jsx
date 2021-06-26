@@ -25,11 +25,12 @@ class Login extends Component{
             this.setState({
                 email:'',password:''
             })
+            console.log(res)
             history.push('/')
         }else{
-            console.log('Logic Fail')
+            console.log('Logic Failed')
         }
-        console.log(this.props)
+        
     }
 
     render(){
@@ -48,7 +49,7 @@ class Login extends Component{
 
 const reduxState =(state)=>({
     isLoading:state.isLoading,
-    user:state.user
+    userGet:state.user
 })
 const reduxDispatch =(dispatch)=>({
     loginAPI:(data)=>dispatch(loginUserAPI(data)),
