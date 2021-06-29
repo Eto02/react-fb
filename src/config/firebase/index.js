@@ -3,13 +3,13 @@ import  'firebase/auth';
 import  'firebase/database';
 // import  'firebase/firestore';
 var firebaseConfig = {
-    apiKey: "AIzaSyDLI--M6H-UmpaTu0V3hm7T3XXhqq-8bDg",
-    authDomain: "react-fb-01.firebaseapp.com",
-    projectId: "react-fb-01",
-    storageBucket: "react-fb-01.appspot.com",
-    messagingSenderId: "1062163920097",
-    appId: "1:1062163920097:web:551424669438df9fe0b3a0",
-    measurementId: "G-RX60JCYG8Y"
+  apiKey: "AIzaSyD4tn5IC6t37TS70mhhrOfgIlxb7UvvKWY",
+  authDomain: "new-react-fb.firebaseapp.com",
+  projectId: "new-react-fb",
+  storageBucket: "new-react-fb.appspot.com",
+  messagingSenderId: "985785192463",
+  appId: "1:985785192463:web:dd233f2f2732e75b69937a",
+  measurementId: "G-8JJ49L9D5M"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);

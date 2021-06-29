@@ -1,4 +1,4 @@
-import firebase from '../../firebase/index'
+import firebase,{database} from '../../firebase/index'
 export const actionUserName =()=>(dispatch)=>{
     setTimeout(()=>{
         return   dispatch({type:'CHANGE_USER',value:'TeTe'})
@@ -53,4 +53,54 @@ export const loginUserAPI =(data)=>(dispatch)=>{
             })
         )
     })
+}
+export const addDataToApi =(data)=>(dispatch)=>{
+    database.ref('notes/' + data.userId).push({
+        title: data.title,
+        content: data.content,
+        date: data.date,
+    });
+}
+
+export const getDataFromApi =(data)=>(dispatch)=>{
+    return new Promise((resolve,reject)=>{
+        const urlNotes = database.ref('notes/' + data);
+        urlNotes.on('value', (snapshot) => {
+            console.log('getData',snapshot.val())
+            const data=[];
+            Object.keys(snapshot.val()).map(key=>{
+                data.push({
+                    id:key,
+                    data:snapshot.val()[key]
+                })
+            })
+            dispatch({type:'SET_NOTES',value:data})
+            resolve(snapshot.val())
+          });
+    })
+    
+}
+export const updateDataAPI =(data)=>(dispatch)=>{
+    return new Promise((resolve,reject)=>{
+        const urlNotes = database.ref(`notes/${data.userId}/${data.noteId}`)
+        urlNotes.set({
+            title: data.title,
+            content: data.content,
+            date: data.date,
+        },(err)=>{
+            if (err) {
+                reject(false)
+            }else{
+                resolve(data)
+            }
+        });
+    })
+    
+}
+export const deleteDataAPI =(data)=>(dispatch)=>{
+    return new Promise((resolve,reject)=>{
+        const urlNotes = database.ref(`notes/${data.userId}/${data.noteId}`)
+        urlNotes.remove();
+    })
+    
 }
