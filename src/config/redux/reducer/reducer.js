@@ -1,43 +1,43 @@
 // import ActionType from '../action';
 
-const initialState={
-    popup:false,
-    isLogin:false,
-    isLoading:false,
-    user:{},
-    notes:{}
-}
+const initialState = {
+    popup: false,
+    isLogin: false,
+    isLoading: false,
+    user: {},
+    notes: {},
+};
 
-const reducer=(state=initialState,action)=>{
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'CHANGE_POPUP':
-            return {
-                ...state,
-                popup:action.value
-            }
-        case 'CHANGE_ISLOGIN':
+    case 'CHANGE_POPUP':
         return {
             ...state,
-            isLogin:action.value
-        }
-        case 'CHANGE_USER':
+            popup: action.value,
+        };
+    case 'CHANGE_ISLOGIN':
         return {
             ...state,
-            user:action.value
-        }
-        case 'CHANGE_LOADING':
+            isLogin: action.value,
+        };
+    case 'CHANGE_USER':
         return {
             ...state,
-            isLoading:action.value
-        }
-        case 'SET_NOTES':
-            return {
-                ...state,
-                notes:action.value
-            }
-        default:
-           return state
+            user: action.value,
+        };
+    case 'CHANGE_LOADING':
+        return {
+            ...state,
+            isLoading: action.value,
+        };
+    case 'SET_NOTES':
+        return {
+            ...state,
+            notes: action.value,
+        };
+    default:
+        return state;
     }
-}
+};
 
 export default reducer;
